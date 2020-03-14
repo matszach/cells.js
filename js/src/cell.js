@@ -36,7 +36,7 @@ class Cell extends _Entity {
         let speedCost = this.speed / St.Cell.maxSpeed * St.Cell.speedUpkeep;
         let feedingRateCost = this.feedingRate / St.Cell.maxFeedingRate * St.Cell.feedingRateUpkeep;
         let splitReqCost = this.splitReq / St.Cell.maxSplitReq * St.Cell.splitReqUpkeep;
-        this.energy -= 1;
+        this.energy -= (speedCost + feedingRateCost + splitReqCost);
         this.energy = this.energy < 0 ? 0 : this.energy;
     }
 

@@ -10,7 +10,7 @@ class FoodRegistry extends _EntityRegistry {
     }
 
     onManage() {
-        this.spawnRandom();
+        Gmt.iter1D(St.Food.spawnedPerFrame, () => this.spawnRandom());
     }
 
     logicOnEntity(food) {

@@ -16,10 +16,10 @@ class CellRegistry extends _EntityRegistry {
     }
 
     logicOnEntity(cell) {
-        
+
         // upkeep
         cell.payUpkeep();
-        if(cell.energy < 0) {
+        if(cell.energy <= 0) {
             cell.expired = true;
 
         // reproduction

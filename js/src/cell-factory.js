@@ -25,6 +25,11 @@ class CellFactory extends _EntityFactory {
         let speed = cell.speed * this.#getMutation();
         let feedingRate = cell.feedingRate * this.#getMutation();
         let splitReq = cell.splitReq * this.#getMutation();
+        if(St.Cell.mutationLimits) {
+            speed = Gmt.clamp(speed, St.Cell.minSpeed, St.Cell.maxSpeed);
+            feedingRate = Gmt.clamp(feedingRate, St.Cell.minFeedingRate, St.Cell.maxFeedingRate);
+            splitReq = Gmt.clamp(splitReq, St.Cell.minSplitReq, St.Cell.maxSplitReq);
+        }
         return new Cell(pos, speed, feedingRate, splitReq);
     }
 

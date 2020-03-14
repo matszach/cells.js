@@ -18,6 +18,7 @@ $(window).ready(() => {
         painter.drawFoods(foodRegistry.entities);
         painter.drawCells(cellRegistry.entities);
         painter.drawInfo(loop, foodRegistry, cellRegistry);
+        painter.drawHistory(loop, foodRegistry, cellRegistry);
     }).start();
 
 });
