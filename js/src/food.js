@@ -1,7 +1,7 @@
 class Food extends _Entity {
 
-    static #MAX_VALUE = 50;
-    static #GROWTH_RATE = 0.01;
+    static #MAX_VALUE = 100;
+    static #GROWTH_RATE = 0.1;
     static #RADIUS_MULTIPLIER = 0.1;
 
     constructor(vertex, r, g, b, value) {

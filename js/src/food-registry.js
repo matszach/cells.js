@@ -1,7 +1,6 @@
 class FoodRegistry extends _EntityRegistry {
 
     static #INITIAL_FOOD = 500;
-    static #FOOD_SPAWN_CHANCE = 0.8;
 
     init() {
         Gmt.iter1D(FoodRegistry.#INITIAL_FOOD, () => this.spawnRandom());
@@ -12,9 +11,7 @@ class FoodRegistry extends _EntityRegistry {
     }
 
     onManage() {
-        if(Gmt.chance(FoodRegistry.#FOOD_SPAWN_CHANCE)) {
-            this.spawnRandom();
-        }
+        this.spawnRandom();
     }
 
     logicOnEntity(food) {
