@@ -27,15 +27,30 @@ class Painter {
         if(loop.getFrame() % St.Data.samplingRate == 0) {
             this.updateHistory(foodRegistry, cellRegistry);
         }
-        
+
+        // background box
         let bounds = this.cw.getBoundingRect();
         let historyBox = new Gmt.Rectangle(
             10, bounds.height - 210, bounds.width - 20, 200 
         );
         this.cw.drawRect(historyBox, this.boxColorFill, this.boxColorStroke, 2);
-
         let spacing = (bounds.width - 40)/St.Data.samplesLimit;
+        for(var i = 0; i < St.Data.samplesLimit + 1; i++) {
+            let x = 10 + i * spacing;
+            let y = bounds.height - 210;
+            this.cw.strokeSegment(
+                new Gmt.Segment(x, y, x, y + 200), this.boxColorStroke, 0.5
+            );
+        }
+        for(var i = 0; i < 10; i++) {
+            let y = bounds.height - i * 20 - 10;
+            this.cw.strokeSegment(
+                new Gmt.Segment(10, y, bounds.width - 10, y), this.boxColorStroke, 0.5
+            );
+        }
 
+
+        // food history chart
         let foodHistoryLine = new Gmt.PolyLine();
         for(let i = 0; i < this.foodHistory.length; i++) {
             let x = 20 + i * spacing;
@@ -47,6 +62,7 @@ class Painter {
             this.cw.strokePolyLine(foodHistoryLine, this.foodHistoryColor, 5);
         }
 
+        // cell histpry chart
         let cellHistoryLine = new Gmt.PolyLine();
         for(let i = 0; i < this.cellHistory.length; i++) {
             let x = 20 + i * spacing;
