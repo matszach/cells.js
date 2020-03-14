@@ -1,15 +1,14 @@
 
 class CellRegistry extends _EntityRegistry {
 
-    static #INITIAL_CELLS = 20;
-
     constructor(factory, foodRegistry) {
         super(factory);
         this.foodRegistry = foodRegistry;
     }
 
     init() {
-        Gmt.iter1D(CellRegistry.#INITIAL_CELLS, () => this.spawnRandom());
+        this.entities = [];
+        Gmt.iter1D(St.Cell.nofInitial, () => this.spawnRandom());
     }
 
     spawnRandom() {
@@ -17,17 +16,17 @@ class CellRegistry extends _EntityRegistry {
     }
 
     logicOnEntity(cell) {
-
+        
         // upkeep
         cell.payUpkeep();
-        if(cell.currEnergy < 0) {
+        if(cell.energy < 0) {
             cell.expired = true;
 
         // reproduction
         } else if(cell.shouldSplit()) {
             let newCell = this.factory.createFromCell(cell);
-            cell.currEnergy /= 2;
-            newCell.currEnergy = cell.currEnergy;
+            cell.energy /= 2;
+            newCell.energy = cell.energy;
             this.add(newCell);
         
         // feeding
@@ -43,9 +42,14 @@ class CellRegistry extends _EntityRegistry {
                 }
             });
 
-            if(distToNearestFood < Cell.RADIUS_MULTIPLIER * cell.currEnergy) {
-                cell.currEnergy = Gmt.clamp(cell.currEnergy + nearestFood.value, 0, cell.maxEnergy);
-                nearestFood.expired = true;
+            if(distToNearestFood < cell.getRadius()) {
+                nearestFood.value -= cell.feedingRate;
+                cell.energy = cell.energy + cell.feedingRate;
+                if(nearestFood.value <= 0) {
+                    nearestFood.value = 0;
+                    nearestFood.expired = true;
+                }
+
             } else {
                 cell.pos.moveTowards(nearestFood.pos, cell.speed);
             }

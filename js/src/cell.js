@@ -1,45 +1,43 @@
 class Cell extends _Entity {
 
-    static RADIUS_MULTIPLIER = 0.04;
-    static BASE_SIZE = 2;
-
-    static #SPEED_COST_RATIO = 0.5;
-    static #MAX_ENERGY_COST_RATIO = 0.2;
-    static #SPLITREQ_COST_RATIO = 0.1;
-
-    constructor(vertex, speed, maxEnergy, splitReq) {
-        super(vertex, Cell.getRed(speed), Cell.getGreen(maxEnergy), Cell.getBlue(splitReq));
+    constructor(vertex, speed, feedingRate, splitReq) {
+        super(vertex, Cell.getRed(speed), Cell.getGreen(feedingRate), Cell.getBlue(splitReq));
         this.speed = speed;
-        this.maxEnergy = maxEnergy
-        this.currEnergy = maxEnergy/2;
+        this.feedingRate = feedingRate;
         this.splitReq = splitReq;
+        this.energy = splitReq/2;
     }
 
     static getRed(speed) {
-        return 255 * (speed - CellFactory.MIN_SPEED)/(CellFactory.MAX_SPEED - CellFactory.MIN_SPEED);
+        return 255 * (speed - St.Cell.minSpeed)/( St.Cell.maxSpeed -  St.Cell.minSpeed);
     }
 
-    static getGreen(maxEnergy) {
-        return 255 * (maxEnergy - CellFactory.MIN_MAXENERGY)/(CellFactory.MAX_MAXENERGY - CellFactory.MIN_MAXENERGY);
+    static getGreen(feedingRate) {
+        return 255 * (feedingRate - St.Cell.minFeedingRate)/( St.Cell.maxFeedingRate -  St.Cell.minFeedingRate);
     }
 
     static getBlue(splitReq) {
-        return 255 * (splitReq - CellFactory.MIN_SPLITREQ)/(CellFactory.MAX_SPLITREQ - CellFactory.MIN_SPLITREQ);
+        return 255 * (splitReq - St.Cell.minSplitReq)/( St.Cell.maxSplitReq -  St.Cell.minSplitReq);
+    }
+
+    getRadius() {
+        return this.energy * St.Cell.radiusMod;
     }
 
     toCircle() {
-        return this.pos.toCircle(this.currEnergy * Cell.RADIUS_MULTIPLIER + Cell.BASE_SIZE);
+        return this.pos.toCircle(this.getRadius());
     }
 
     shouldSplit() {
-        return this.currEnergy > this.splitReq;
+        return this.energy > this.splitReq;
     }
 
     payUpkeep() {
-        let speedCost = this.speed / CellFactory.MAX_SPEED * Cell.#SPEED_COST_RATIO;
-        let maxEnergyCost = this.maxEnergy / CellFactory.MAX_MAXENERGY * Cell.#MAX_ENERGY_COST_RATIO;
-        let splitReqCost = this.splitReq / CellFactory.MAX_SPLITREQ * Cell.#SPLITREQ_COST_RATIO;
-        this.currEnergy -= (speedCost + maxEnergyCost + splitReqCost);
+        let speedCost = this.speed / St.Cell.maxSpeed * St.Cell.speedUpkeep;
+        let feedingRateCost = this.feedingRate / St.Cell.maxFeedingRate * St.Cell.feedingRateUpkeep;
+        let splitReqCost = this.splitReq / St.Cell.maxSplitReq * St.Cell.splitReqUpkeep;
+        this.energy -= 1;
+        this.energy = this.energy < 0 ? 0 : this.energy;
     }
 
 }

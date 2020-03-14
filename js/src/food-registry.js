@@ -1,9 +1,8 @@
 class FoodRegistry extends _EntityRegistry {
 
-    static #INITIAL_FOOD = 500;
-
     init() {
-        Gmt.iter1D(FoodRegistry.#INITIAL_FOOD, () => this.spawnRandom());
+        this.entities = [];
+        Gmt.iter1D(St.Food.nofInitial, () => this.spawnRandom());
     }
 
     spawnRandom() {

@@ -19,12 +19,20 @@ class Painter {
         this.cw.write(`CELLS : ${Math.round(cellRegistry.entities.length)}`, 15, 90, this.textColor, 20);
     }
 
-    drawEntity(e) {
-        this.cw.drawCircle(e.toCircle(), e.colorFill, e.colorStroke, 2);
+    drawCell(c) {
+        this.cw.drawCircle(c.toCircle(), c.colorFill, c.colorStroke, 4);
     }
 
-    drawEntities(entityArray) {
-        entityArray.forEach(e => this.drawEntity(e));
+    drawCells(cellArray) {
+        cellArray.forEach(c => this.drawCell(c));
+    }
+
+    drawFood(f) {
+        this.cw.fillCircle(f.toCircle(), f.colorFill);
+    }
+
+    drawFoods(foodArray) {
+        foodArray.forEach(f => this.drawFood(f));
     }
 
 }

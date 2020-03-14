@@ -1,21 +1,17 @@
 class Food extends _Entity {
 
-    static #MAX_VALUE = 100;
-    static #GROWTH_RATE = 0.1;
-    static #RADIUS_MULTIPLIER = 0.1;
-
     constructor(vertex, r, g, b, value) {
         super(vertex, r, g, b);
         this.value = value;
     }
 
     grow() {
-        if(this.value < Food.#MAX_VALUE) {
-            this.value += Food.#GROWTH_RATE;
+        if(this.value < St.Food.maxValue) {
+            this.value += St.Food.growthRate;
         }
     }
 
     toCircle() {
-        return this.pos.toCircle(this.value * Food.#RADIUS_MULTIPLIER);
+        return this.pos.toCircle(this.value * St.Food.radiusMod);
     }
 }

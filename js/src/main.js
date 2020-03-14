@@ -15,8 +15,8 @@ $(window).ready(() => {
         foodRegistry.manage();
         cellRegistry.manage();
         painter.clear();
-        painter.drawEntities(foodRegistry.entities);
-        painter.drawEntities(cellRegistry.entities);
+        painter.drawFoods(foodRegistry.entities);
+        painter.drawCells(cellRegistry.entities);
         painter.drawInfo(loop, foodRegistry, cellRegistry);
     }).start();
 
