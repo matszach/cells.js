@@ -35,13 +35,6 @@ class Painter {
         );
         this.cw.drawRect(historyBox, this.boxColorFill, this.boxColorStroke, 2);
         let spacing = (bounds.width - 40)/St.Data.samplesLimit;
-        for(var i = 0; i < St.Data.samplesLimit + 1; i++) {
-            let x = 10 + i * spacing;
-            let y = bounds.height - 210;
-            this.cw.strokeSegment(
-                new Gmt.Segment(x, y, x, y + 200), this.boxColorStroke, 0.5
-            );
-        }
         for(var i = 0; i < 10; i++) {
             let y = bounds.height - i * 20 - 10;
             this.cw.strokeSegment(
