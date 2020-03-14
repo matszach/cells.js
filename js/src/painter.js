@@ -53,7 +53,7 @@ class Painter {
         // food history chart
         let foodHistoryLine = new Gmt.PolyLine();
         for(let i = 0; i < this.foodHistory.length; i++) {
-            let x = 20 + i * spacing;
+            let x = 25 + i * spacing;
             let y = bounds.height - 10 - this.foodHistory[i]/5;
             foodHistoryLine.add(x, y);
         }
@@ -65,7 +65,7 @@ class Painter {
         // cell histpry chart
         let cellHistoryLine = new Gmt.PolyLine();
         for(let i = 0; i < this.cellHistory.length; i++) {
-            let x = 20 + i * spacing;
+            let x = 25 + i * spacing;
             let y = bounds.height - 10 - this.cellHistory[i]/5;
             cellHistoryLine.add(x, y);
         }
